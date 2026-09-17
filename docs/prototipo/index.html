@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototipo - Controle de Toalhas</title>
+  <link rel="stylesheet" href="../../frontend/styles.css">
+</head>
+<body>
+  <header class="suap-topo">
+    <div>
+      <p class="marca">Nado Livre</p>
+      <h1>Controle de Toalhas</h1>
+    </div>
+  </header>
+
+  <main class="suap-conteudo">
+    <section class="suap-caixa">
+      <h2>Prototipo do sistema</h2>
+      <p class="descricao">Telas principais do controle de toalhas</p>
+
+      <nav class="nav-telas action-bar">
+        <a href="#toalhas" class="btn success" data-painel="toalhas">Toalhas</a>
+        <a href="#nadadores" class="btn default" data-painel="nadadores">Nadadores</a>
+        <a href="#funcionarios" class="btn default" data-painel="funcionarios">Funcionarios</a>
+        <a href="#retirada" class="btn default" data-painel="retirada">Retirada</a>
+        <a href="#devolucao" class="btn default" data-painel="devolucao">Devolucao</a>
+        <a href="#historico" class="btn default" data-painel="historico">Historico</a>
+      </nav>
+
+      <section id="toalhas" class="painel ativo">
+        <h3>Lista de toalhas</h3>
+        <p class="hint">Caso de uso: Gerenciar toalhas / Consultar toalhas | RF03 RF06 RF07</p>
+        <p><a class="btn primary" href="../../frontend/index.html">Abrir versao interativa (CRUD JS)</a></p>
+        <table>
+          <thead>
+            <tr><th>Codigo</th><th>Tamanho</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>TL-001</td><td>M</td><td><span class="status disponivel">Disponivel</span></td></tr>
+            <tr><td>TL-002</td><td>G</td><td><span class="status em_uso">Em uso</span></td></tr>
+            <tr><td>TL-003</td><td>P</td><td><span class="status manutencao">Manutencao</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="nadadores" class="painel">
+        <h3>Adicionar nadador</h3>
+        <p class="hint">Caso de uso: Cadastrar nadador | RF02 | Usuario: Funcionario</p>
+        <div class="linha"><label>Nome<input value="Joao Silva"></label></div>
+        <div class="linha"><label>Documento<input value="123.456.789-00"></label></div>
+        <div class="linha"><label>Turma<input value="Infantil A"></label></div>
+        <button type="button" class="btn success">Adicionar</button>
+      </section>
+
+      <section id="funcionarios" class="painel">
+        <h3>Gerenciar funcionarios</h3>
+        <p class="hint">Caso de uso: Gerenciar funcionarios | RF01 | Usuario: Funcionario</p>
+        <div class="linha"><label>Nome<input value="Ana Costa"></label></div>
+        <div class="linha"><label>Matricula<input value="F-001"></label></div>
+        <div class="linha"><label>Cargo<input value="Atendente"></label></div>
+        <button type="button" class="btn success">Adicionar</button>
+      </section>
+
+      <section id="retirada" class="painel">
+        <h3>Registrar retirada</h3>
+        <p class="hint">Caso de uso: Registrar retirada | RF04 RNF01 RNF02 | Data/hora automatica</p>
+        <div class="linha">
+          <label>Funcionario
+            <select><option>Ana Costa</option></select>
+          </label>
+        </div>
+        <div class="linha">
+          <label>Nadador
+            <select><option>Joao Silva</option></select>
+          </label>
+        </div>
+        <div class="linha">
+          <label>Toalha disponivel
+            <select><option>TL-001 (M)</option></select>
+          </label>
+        </div>
+        <p class="hint">Data/hora: gerada pelo sistema no momento da confirmacao</p>
+        <button type="button" class="btn success">Confirmar</button>
+      </section>
+
+      <section id="devolucao" class="painel">
+        <h3>Registrar devolucao</h3>
+        <p class="hint">Caso de uso: Registrar devolucao | RF05 RNF01 | Data/hora automatica</p>
+        <div class="linha">
+          <label>Toalha em uso
+            <select><option>TL-002 (G) - Joao Silva</option></select>
+          </label>
+        </div>
+        <div class="linha">
+          <label>Funcionario
+            <select><option>Ana Costa</option></select>
+          </label>
+        </div>
+        <p class="hint">Data/hora: gerada pelo sistema no momento da confirmacao</p>
+        <button type="button" class="btn success">Confirmar</button>
+      </section>
+
+      <section id="historico" class="painel">
+        <h3>Historico da toalha</h3>
+        <p class="hint">Caso de uso: Consultar historico | RF08</p>
+        <div class="linha">
+          <label>Toalha
+            <select><option>TL-001</option></select>
+          </label>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Retirada</th><th>Devolucao</th><th>Nadador</th><th>Funcionario</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>15/09/2026 10:12</td>
+              <td>15/09/2026 11:40</td>
+              <td>Joao Silva</td>
+              <td>Ana Costa</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+
+  </main>
+
+  <script>
+    const links = document.querySelectorAll(".nav-telas a");
+    const paineis = document.querySelectorAll(".painel");
+
+    links.forEach((link) => {
+      link.addEventListener("click", (evento) => {
+        evento.preventDefault();
+        const id = link.dataset.painel;
+        links.forEach((l) => {
+          l.classList.remove("success");
+          l.classList.add("default");
+        });
+        paineis.forEach((p) => p.classList.remove("ativo"));
+        link.classList.remove("default");
+        link.classList.add("success");
+        document.getElementById(id).classList.add("ativo");
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Toalhas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="suap-topo">
+    <div>
+      <p class="marca">Nado Livre</p>
+      <h1>Controle de Toalhas</h1>
+    </div>
+  </header>
+
+  <main class="suap-conteudo">
+    <section class="suap-caixa">
+      <h2>Lista de toalhas</h2>
+      <p class="descricao">Escola de natacao — registro local das toalhas</p>
+
+      <div class="action-bar">
+        <button type="button" class="btn success" id="btn-nova">Adicionar</button>
+      </div>
+
+      <section id="lista-toalhas" aria-live="polite"></section>
+    </section>
+  </main>
+
+  <dialog id="dialogo-toalha">
+    <form method="dialog" id="form-toalha">
+      <h3 id="titulo-dialogo">Adicionar toalha</h3>
+      <input type="hidden" id="campo-id">
+
+      <label>
+        Codigo
+        <input type="text" id="campo-codigo" required>
+      </label>
+
+      <label>
+        Tamanho
+        <select id="campo-tamanho" required>
+          <option value="P">P</option>
+          <option value="M">M</option>
+          <option value="G">G</option>
+        </select>
+      </label>
+
+      <label>
+        Status
+        <select id="campo-status" required>
+          <option value="disponivel">Disponivel</option>
+          <option value="em_uso">Em uso</option>
+          <option value="manutencao">Manutencao</option>
+        </select>
+      </label>
+
+      <label id="rotulo-observacao" hidden>
+        Observacao
+        <input type="text" id="campo-observacao">
+      </label>
+
+      <label>
+        Tipo
+        <select id="campo-tipo">
+          <option value="comum">Comum</option>
+          <option value="manutencao">Em manutencao</option>
+        </select>
+      </label>
+
+      <div class="acoes-form">
+        <button type="submit" value="salvar" class="btn success" id="btn-salvar">Adicionar</button>
+        <button type="button" class="btn default" id="btn-cancelar">Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
