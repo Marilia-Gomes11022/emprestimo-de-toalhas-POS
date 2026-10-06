@@ -198,9 +198,23 @@
           throw new Error("Selecione um status válido.");
         }
         if (editandoId === null) {
+          if (recurso === "toalhas" && valores.status === "em_uso") {
+            throw new Error("Registre uma movimentação para marcar a toalha como em uso.");
+          }
           dados[recurso].push(definicoes[recurso].criar(valores));
         } else {
           const item = dados[recurso].find((registro) => registro.id === editandoId);
+          if (recurso === "toalhas") {
+            const possuiRetiradaAberta = dados.movimentacoes.some(
+              (movimentacao) => movimentacao.toalha === item && !movimentacao.devolucao
+            );
+            if (possuiRetiradaAberta && valores.status !== "em_uso") {
+              throw new Error("A toalha não pode sair do status em uso antes de registrar a devolução.");
+            }
+            if (!possuiRetiradaAberta && valores.status === "em_uso") {
+              throw new Error("Registre uma movimentação para marcar a toalha como em uso.");
+            }
+          }
           definicoes[recurso].atualizar(item, valores);
           editandoId = null;
         }
