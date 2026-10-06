@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funcionários | Nado Livre</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../js/interface/app.css">
+</head>
+<body data-recurso="funcionarios">
+  <header class="suap-topo"><div><p class="marca">Nado Livre</p><h1>Controle de toalhas</h1></div></header>
+  <main class="suap-conteudo">
+    <nav class="nav-telas" aria-label="Navegação principal">
+      <a class="btn default" href="../index.html">Início</a>
+      <a class="btn default" href="toalhas.html">Toalhas</a>
+      <a class="btn success" href="funcionarios.html">Funcionários</a>
+      <a class="btn default" href="nadadores.html">Nadadores</a>
+      <a class="btn default" href="movimentacoes.html">Movimentações</a>
+    </nav>
+    <section class="suap-caixa">
+      <h2>Funcionários</h2><p class="descricao">Cadastre as pessoas que registram retiradas e devoluções.</p>
+      <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+      <form id="form-recurso" class="form-recurso"></form>
+      <div class="tabela-responsiva"><table><thead id="cabecalho-tabela"></thead><tbody id="corpo-tabela"></tbody></table></div>
+    </section>
+  </main>
+  <script src="../js/classes/modelos.js" defer></script>
+  <script src="../js/dados/repositorio.js" defer></script>
+  <script src="../js/interface/app.js" defer></script>
+</body>
+</html>

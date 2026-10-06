@@ -1,0 +1,67 @@
+.nav-telas {
+  margin: 18px 0;
+}
+
+.form-recurso {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  align-items: end;
+  gap: 12px;
+  margin: 18px 0 24px;
+  padding: 16px;
+  background: #f9fbf9;
+  border: 1px solid #e2e9e3;
+}
+
+.form-recurso[hidden] {
+  display: none;
+}
+
+.form-recurso button {
+  min-height: 40px;
+}
+
+.tabela-responsiva {
+  overflow-x: auto;
+}
+
+.tabela-responsiva td {
+  vertical-align: middle;
+}
+
+.mensagem {
+  min-height: 1.4em;
+  margin: 10px 0;
+}
+
+.mensagem-erro {
+  color: #891110;
+}
+
+.mensagem-sucesso {
+  color: #1f7a2d;
+}
+
+.resumo-recursos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.resumo-item {
+  display: grid;
+  gap: 4px;
+  padding: 16px;
+  background: #f7fdf8;
+  border: 1px solid #d6f5db;
+  border-radius: 4px;
+}
+
+.resumo-item strong {
+  color: #14521d;
+  font-size: 1.5rem;
+}
+
+.acoes {
+  flex-wrap: wrap;
+}

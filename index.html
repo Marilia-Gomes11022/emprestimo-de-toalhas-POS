@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de toalhas | Nado Livre</title>
+  <link rel="stylesheet" href="frontend/styles.css">
+  <link rel="stylesheet" href="js/interface/app.css">
+</head>
+<body>
+  <header class="suap-topo">
+    <div><p class="marca">Nado Livre</p><h1>Controle de empréstimos de toalhas</h1></div>
+  </header>
+  <main class="suap-conteudo">
+    <section class="suap-caixa">
+      <h2>Painel de recursos</h2>
+      <p class="descricao">Cadastre os recursos e registre retiradas e devoluções. Os dados ficam salvos neste navegador.</p>
+      <nav class="nav-telas" aria-label="Navegação principal">
+        <a class="btn primary" href="frontend/toalhas.html">Toalhas</a>
+        <a class="btn primary" href="frontend/funcionarios.html">Funcionários</a>
+        <a class="btn primary" href="frontend/nadadores.html">Nadadores</a>
+        <a class="btn success" href="frontend/movimentacoes.html">Movimentações</a>
+      </nav>
+      <div id="resumo" class="resumo-recursos" aria-live="polite"></div>
+    </section>
+  </main>
+  <script src="js/classes/modelos.js" defer></script>
+  <script src="js/dados/repositorio.js" defer></script>
+  <script src="js/interface/inicio.js" defer></script>
+</body>
+</html>
