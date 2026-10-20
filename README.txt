@@ -1,106 +1,48 @@
-CONTROLE DE TOALHAS - ESCOLA DE NATACAO
-=======================================
+# Nado Livre — Controle de Toalhas
 
-Status: entrega completa (API + frontend caps. 1-3 + PDF com diagramas e prototipo)
+Projeto do estudo de caso de empréstimo de toalhas para escola de natação.
 
+## Funcionalidades
 
-Onde cada parte da atividade foi aplicada
------------------------------------------
+- Cadastro e listagem de toalhas, nadadores e funcionários.
+- Permissão individual para o nadador retirar toalhas, com indicação visual e botão para conceder/retirar.
+- Registro de empréstimo somente para nadadores autorizados e toalhas disponíveis.
+- Registro de devolução e histórico de empréstimos.
+- Interface salva os dados no `localStorage` do navegador. A API Flask persiste os dados em SQLite e aplica a mesma regra de permissão no servidor.
+- Retirar a permissão não exclui o cadastro nem altera empréstimos já registrados.
 
-1) Atividade 1 - Documentacao PDF
-   - Arquivo final: lia\docs\documentacao.pdf
-   - Inclui: equipe, cenario, requisitos, casos de uso (imagem),
-     prototipo das 6 telas (imagens), DER (imagem), link do repositorio
-   - Para regenerar o PDF: py lia\docs\gerar_documentacao.py
+## Como abrir a interface
 
-2) Atividade 1 - API
-   - Pasta: lia\api
-   - Entidades: Funcionario, Nadador, Toalha, Movimentacao
-   - CRUD + retirada/devolucao + consultas + historico
-   - Data/hora automatica e bloqueio de toalha em uso
+Abra `frontend/index.html` no navegador. Os dados da interface ficam salvos nesse navegador. Para recomeçar os dados de demonstração, limpe o armazenamento local do site no navegador (chave `nadoLivre.controleToalhas.v1`).
 
-3) Atividade 2 / Capitulo 1 - Lista dinamica
-   - lia\frontend\app.js
-   - Lista de objetos gerando HTML dinamicamente
+## Como executar a API (Windows)
 
-4) Atividade 2 / Capitulo 2 - Classes e POO
-   - lia\frontend\app.js
-   - Classes Toalha e ToalhaManutencao, render(), encapsulamento, heranca
+No terminal, entre na pasta `api` e execute:
 
-5) Atividade 2 / Capitulo 3 - Eventos e CRUD
-   - lia\frontend\index.html + app.js + styles.css
-   - Criar / Alterar / Excluir com dialog e data-id
-   - Recurso do projeto: Toalha
+```bash
+py -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+py run.py
+```
 
-6) Prototipo navegavel das demais telas
-   - lia\docs\prototipo\index.html
+A API ficará disponível em `http://127.0.0.1:5000/`. O banco SQLite `api/toalhas.db` é criado automaticamente; a inicialização também adiciona a coluna de permissão a bancos existentes.
 
+## Endpoints principais
 
-Como rodar no Windows
----------------------
+- `GET/POST /nadadores`
+- `PUT /nadadores/<id>`
+- `PATCH /nadadores/<id>/permissao` com JSON `{"pode_retirar_toalhas": true}` ou `false`
+- `POST /movimentacoes/retirada` — retorna HTTP `403` quando o nadador não tem permissão
+- `POST /movimentacoes/devolucao`
 
-A) Se o PowerShell bloquear scripts (ExecutionPolicy)
------------------------------------------------------
-Erro tipico:
-  "a execucao de scripts foi desabilitada neste sistema"
-
-No PowerShell (pode ser como usuario atual):
-
-  Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-
-Ou so nesta janela:
-
-  Set-ExecutionPolicy -Scope Process Bypass
-
-Alternativa sem mudar politica:
-
-  .\.venv\Scripts\activate.bat
+A permissão é `true` por padrão para cadastros novos e para cadastros antigos sem o campo.
 
 
-B) Rodar a API
---------------
-  cd C:\Users\rtond\Desktop\lia\lia\api
-  py -m venv .venv
-  .\.venv\Scripts\Activate.ps1
-  pip install -r requirements.txt
-  py run.py
+## Refatoração de componentes HTML
 
-Abrir: http://127.0.0.1:5000/
-
-
-C) Rodar o frontend (caps. 1-3)
--------------------------------
-Abrir no navegador:
-  C:\Users\rtond\Desktop\lia\lia\frontend\index.html
-
-
-D) Abrir prototipo das telas / PDF
-----------------------------------
-  C:\Users\rtond\Desktop\lia\lia\docs\prototipo\index.html
-  C:\Users\rtond\Desktop\lia\lia\docs\documentacao.pdf
-
-
-Estrutura
----------
-lia\
-  README.txt
-  api\
-  frontend\
-  docs\
-    documentacao.pdf
-    documentacao.md
-    gerar_documentacao.py
-    imagens\
-    prototipo\
-
-
-Repositorio
------------
-https://github.com/Marilia-Gomes11022/emprestimo-de-toalhas-POS.git
-
-
-Obs. equipe no PDF
-------------------
-O PDF ja cita Marilia Gomes (dona do repositorio GitHub).
-Se o grupo tiver mais integrantes, edite gerar_documentacao.py
-(secao equipe) e rode de novo: py gerar_documentacao.py
+A renderização das toalhas foi separada seguindo o exemplo do enunciado:
+- `frontend/classes/Toalha.js` e `ToalhaManutencao.js`: classes de domínio, sem métodos `render()`.
+- `frontend/interface/componentes.js`: cria e retorna o elemento HTML de uma toalha.
+- `frontend/interface/toalhas.js`: utiliza o componente e adiciona os elementos à lista.
+- `frontend/app.js`: continua responsável pelas ações e regras da aplicação.
