@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Controle de Toalhas</title>
+  <title>Nado Livre | Controle de Toalhas</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,65 +17,106 @@
 
   <main class="suap-conteudo">
     <section class="suap-caixa">
-      <h2>Lista de toalhas</h2>
-      <p class="descricao">Escola de natacao — registro local das toalhas</p>
+      <h2>Sistema de empréstimos</h2>
+      <p class="descricao">Cadastre nadadores e funcionários, gerencie toalhas e acompanhe retiradas e devoluções.</p>
 
-      <div class="action-bar">
-        <button type="button" class="btn success" id="btn-nova">Adicionar</button>
-      </div>
+      <nav class="nav-telas" aria-label="Navegação principal">
+        <button type="button" class="btn success" data-painel="toalhas">Toalhas</button>
+        <button type="button" class="btn default" data-painel="nadadores">Nadadores</button>
+        <button type="button" class="btn default" data-painel="funcionarios">Funcionários</button>
+        <button type="button" class="btn default" data-painel="emprestimos">Empréstimos</button>
+      </nav>
 
-      <section id="lista-toalhas" aria-live="polite"></section>
+      <section id="toalhas" class="painel ativo">
+        <h3>Lista de toalhas</h3>
+        <p class="hint">Adicione, edite ou remova toalhas. Os dados ficam salvos neste navegador.</p>
+        <div class="action-bar">
+          <button type="button" class="btn success" id="btn-nova">Adicionar toalha</button>
+        </div>
+        <section id="lista-toalhas" aria-live="polite"></section>
+      </section>
+
+      <section id="nadadores" class="painel">
+        <h3>Cadastro de nadadores</h3>
+        <p class="hint">A permissão controla quem pode realizar novos empréstimos. Retirá-la não apaga o cadastro nem o histórico.</p>
+        <form id="form-nadador" class="form-inline">
+          <label>Nome<input id="nadador-nome" maxlength="120" required></label>
+          <label>Documento<input id="nadador-documento" maxlength="40" required></label>
+          <label>Turma<input id="nadador-turma" maxlength="60" required></label>
+          <label class="checkbox-label"><input type="checkbox" id="nadador-permissao" checked> Autorizar empréstimos</label>
+          <button type="submit" class="btn success">Cadastrar nadador</button>
+        </form>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nome</th><th>Documento</th><th>Turma</th><th>Permissão</th><th>Ação</th></tr></thead>
+            <tbody id="lista-nadadores"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="funcionarios" class="painel">
+        <h3>Cadastro de funcionários</h3>
+        <form id="form-funcionario" class="form-inline">
+          <label>Nome<input id="funcionario-nome" maxlength="120" required></label>
+          <label>Matrícula<input id="funcionario-matricula" maxlength="40" required></label>
+          <label>Cargo<input id="funcionario-cargo" maxlength="80" required></label>
+          <button type="submit" class="btn success">Cadastrar funcionário</button>
+        </form>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th></tr></thead>
+            <tbody id="lista-funcionarios"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="emprestimos" class="painel">
+        <h3>Registrar empréstimo de toalha</h3>
+        <p class="hint">Somente nadadores autorizados podem retirar toalhas. A regra também é validada na API.</p>
+        <form id="form-emprestimo" class="form-inline">
+          <label>Funcionário<select id="emprestimo-funcionario" required></select></label>
+          <label>Nadador<select id="emprestimo-nadador" required></select></label>
+          <label>Toalha disponível<select id="emprestimo-toalha" required></select></label>
+          <button type="submit" class="btn success">Registrar retirada</button>
+        </form>
+        <p id="mensagem-emprestimo" class="mensagem" role="status" aria-live="polite"></p>
+        <h3 class="subtitulo">Empréstimos e histórico</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nadador</th><th>Toalha</th><th>Retirada</th><th>Devolução</th><th>Status / ação</th></tr></thead>
+            <tbody id="lista-emprestimos"></tbody>
+          </table>
+        </div>
+      </section>
     </section>
   </main>
 
   <dialog id="dialogo-toalha">
-    <form method="dialog" id="form-toalha">
+    <form id="form-toalha">
       <h3 id="titulo-dialogo">Adicionar toalha</h3>
       <input type="hidden" id="campo-id">
-
-      <label>
-        Codigo
-        <input type="text" id="campo-codigo" required>
-      </label>
-
-      <label>
-        Tamanho
+      <label>Código<input type="text" id="campo-codigo" maxlength="40" required></label>
+      <label>Tamanho
         <select id="campo-tamanho" required>
-          <option value="P">P</option>
-          <option value="M">M</option>
-          <option value="G">G</option>
+          <option value="P">P</option><option value="M">M</option><option value="G">G</option>
         </select>
       </label>
-
-      <label>
-        Status
+      <label>Status
         <select id="campo-status" required>
-          <option value="disponivel">Disponivel</option>
-          <option value="em_uso">Em uso</option>
-          <option value="manutencao">Manutencao</option>
+          <option value="disponivel">Disponível</option><option value="em_uso">Em uso</option><option value="manutencao">Manutenção</option>
         </select>
       </label>
-
-      <label id="rotulo-observacao" hidden>
-        Observacao
-        <input type="text" id="campo-observacao">
+      <label id="rotulo-observacao" hidden>Observação<input type="text" id="campo-observacao" maxlength="200"></label>
+      <label>Tipo
+        <select id="campo-tipo"><option value="comum">Comum</option><option value="manutencao">Em manutenção</option></select>
       </label>
-
-      <label>
-        Tipo
-        <select id="campo-tipo">
-          <option value="comum">Comum</option>
-          <option value="manutencao">Em manutencao</option>
-        </select>
-      </label>
-
       <div class="acoes-form">
-        <button type="submit" value="salvar" class="btn success" id="btn-salvar">Adicionar</button>
+        <button type="submit" class="btn success" id="btn-salvar">Adicionar</button>
         <button type="button" class="btn default" id="btn-cancelar">Cancelar</button>
       </div>
     </form>
   </dialog>
 
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
