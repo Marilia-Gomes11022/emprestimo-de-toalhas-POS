@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+api/toalhas.db
+.venv/
+venv/
+node_modules/
+.DS_Store

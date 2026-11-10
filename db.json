@@ -1,0 +1,15 @@
+{
+  "nadadores": [
+    { "id": 1, "nome": "João Silva", "documento": "123.456.789-00", "turma": "Infantil A", "podeRetirarToalhas": true },
+    { "id": 2, "nome": "Marina Costa", "documento": "987.654.321-00", "turma": "Adulto", "podeRetirarToalhas": false }
+  ],
+  "funcionarios": [
+    { "id": 1, "nome": "Ana Costa", "matricula": "F-001", "cargo": "Atendente" }
+  ],
+  "toalhas": [
+    { "id": 1, "codigo": "TL-001", "tamanho": "M", "status": "disponivel", "tipo": "comum", "observacao": "" },
+    { "id": 2, "codigo": "TL-002", "tamanho": "G", "status": "disponivel", "tipo": "comum", "observacao": "" },
+    { "id": 3, "codigo": "TL-003", "tamanho": "P", "status": "manutencao", "tipo": "manutencao", "observacao": "Costura do acabamento" }
+  ],
+  "emprestimos": []
+}

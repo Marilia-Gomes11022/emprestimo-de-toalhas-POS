@@ -1,0 +1,12 @@
+{
+  "name": "nado-livre-controle-toalhas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend integrado à API REST Flask; JSON Server mantido apenas para estudo opcional",
+  "scripts": {
+    "start:json-server": "json-server --watch db.json --port 3000"
+  },
+  "devDependencies": {
+    "json-server": "0.17.4"
+  }
+}
